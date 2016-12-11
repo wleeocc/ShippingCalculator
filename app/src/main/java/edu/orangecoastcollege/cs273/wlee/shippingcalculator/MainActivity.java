@@ -9,6 +9,10 @@ import android.widget.TextView;
 
 import java.text.NumberFormat;
 
+/**
+ * Displays the total cost whenever the user changes the weight.
+ * @author Wonseop
+ */
 public class MainActivity extends AppCompatActivity {
 
     private ShipItem shipItem;
@@ -55,8 +59,6 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void afterTextChanged(Editable s) {
-
         }
     };
-
 }

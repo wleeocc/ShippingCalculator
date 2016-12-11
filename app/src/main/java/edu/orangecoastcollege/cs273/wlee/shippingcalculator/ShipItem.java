@@ -1,10 +1,12 @@
 package edu.orangecoastcollege.cs273.wlee.shippingcalculator;
 
+/**
+ * Represents an item to ship.
+ * @author Wonseop
+ */
 public class ShipItem {
 
-    /**
-     * Represents an item to ship.
-     */
+
     private double mBaseCost;
     private double mWeight;
     private double mAddedCost;
