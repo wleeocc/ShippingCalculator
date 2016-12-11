@@ -2,6 +2,9 @@ package edu.orangecoastcollege.cs273.wlee.shippingcalculator;
 
 public class ShipItem {
 
+    /**
+     * Represents an item to ship.
+     */
     private double mBaseCost;
     private double mWeight;
     private double mAddedCost;
@@ -9,8 +12,11 @@ public class ShipItem {
     private final double BASE_COST = 3.00;
     private final double COST_INCREMENT = 0.5;
     private final double BASE_WEIGHT = 16;
+    private final double WEIGHT_STEP_SIZE = 4;
 
-
+    /**
+     * Creates a new item to ship.
+     */
     public ShipItem(){
         mBaseCost = BASE_COST;
         mWeight = 0.0;
@@ -18,29 +24,54 @@ public class ShipItem {
         mTotalCost = 0.0;
     }
 
-    public double getmBaseCost(){
+    /**
+     * Returns the base cost.
+     * @return Item's base cost
+     */
+    public double getBaseCost(){
         return mBaseCost;
     }
 
-    public double getmWeight(){
+    /**
+     * Returns the weight.
+     * @return Item's weight
+     */
+    public double getWeight(){
         return mWeight;
     }
 
-    public double getmAddedCost(){
+    /**
+     * Returns the added cost.
+     * @return Item's added cost
+     */
+    public double getAddedCost(){
         return mAddedCost;
     }
 
-    public double getmTotalCost(){
+    /**
+     * Returns the total cost.
+     * @return Item's total cost
+     */
+    public double getTotalCost(){
         return mTotalCost;
     }
 
+    /**
+     * Changes the item's weight.
+     * @param weight Item's weight
+     */
     public void setWeight(double weight) {
         mWeight = weight;
 
-        if (mWeight > BASE_WEIGHT) {
-            mAddedCost = (mWeight - BASE_WEIGHT) / 4 * COST_INCREMENT;
-            mTotalCost = mBaseCost + mAddedCost;
-        }
-    }
+        mBaseCost = BASE_COST;
 
+        if (mWeight == 0) {
+            mBaseCost = 0;
+            mAddedCost = 0;
+        }
+        else if (mWeight > BASE_WEIGHT) {
+            mAddedCost = Math.ceil((mWeight - BASE_WEIGHT) / WEIGHT_STEP_SIZE) * COST_INCREMENT;
+        }
+        mTotalCost = mBaseCost + mAddedCost;
+    }
 }

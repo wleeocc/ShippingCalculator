@@ -1,11 +1,13 @@
 package edu.orangecoastcollege.cs273.wlee.shippingcalculator;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.text.NumberFormat;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText weightEditText;
     private TextView baseCostTextView;
     private TextView addedCostTextView;
-    private TextView totlaCostTextView;
+    private TextView totalCostTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +27,9 @@ public class MainActivity extends AppCompatActivity {
         weightEditText = (EditText) findViewById(R.id.weightEditText);
         baseCostTextView = (TextView) findViewById(R.id.baseCostTextView);
         addedCostTextView = (TextView) findViewById(R.id.addedCostTextView);
-        totlaCostTextView = (TextView) findViewById(R.id.totalCostTextView);
+        totalCostTextView = (TextView) findViewById(R.id.totalCostTextView);
 
+        weightEditText.addTextChangedListener(weightTextChangeListener);
     }
 
     private TextWatcher weightTextChangeListener = new TextWatcher() {
@@ -37,10 +40,17 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            double weight = Double.parseDouble(s.toString()) / 100.0;
-            shipItem.setWeight(weight);
-
+            try {
+                shipItem.setWeight(Double.parseDouble(s.toString()));
+                NumberFormat currency = NumberFormat.getCurrencyInstance();
+                baseCostTextView.setText(currency.format(shipItem.getBaseCost()));
+                addedCostTextView.setText(currency.format(shipItem.getAddedCost()));
+                totalCostTextView.setText(currency.format(shipItem.getTotalCost()));
+            }
+            catch (NumberFormatException e)
+            {
+                shipItem.setWeight(0);
+            }
         }
 
         @Override
